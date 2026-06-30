@@ -1,0 +1,26 @@
+---
+interface Props {
+  light?: boolean; // white logo for dark backgrounds
+  size?: number;
+  href?: string | null;
+}
+const { light = false, size = 24, href = "/" } = Astro.props;
+const color = light ? "var(--white)" : "var(--black)";
+const Tag = href ? "a" : "span";
+---
+
+<Tag class="logo" href={href ?? undefined} aria-label="Uber home" style={`--logo-size:${size}px;--logo-color:${color}`}>
+  Uber
+</Tag>
+
+<style>
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--logo-size);
+    letter-spacing: -0.04em;
+    color: var(--logo-color);
+    line-height: 1;
+    display: inline-block;
+  }
+</style>

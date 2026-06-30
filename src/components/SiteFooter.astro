@@ -1,0 +1,227 @@
+---
+import Logo from "./Logo.astro";
+import { icons } from "../lib/icons";
+
+const columns = [
+  {
+    title: "Company",
+    links: ["About us", "Our offerings", "Newsroom", "Investors", "Blog", "Careers"],
+  },
+  {
+    title: "Products",
+    links: ["Ride", "Drive", "Eat", "Uber for Business", "Uber Freight", "Gift cards"],
+  },
+  {
+    title: "Global citizenship",
+    links: ["Safety", "Sustainability", "Diversity & inclusion"],
+  },
+  {
+    title: "Travel",
+    links: ["Reserve", "Airports", "Cities", "Hourly rentals"],
+  },
+];
+
+const socials = [
+  { name: "Facebook", icon: icons.facebook },
+  { name: "X", icon: icons.x },
+  { name: "YouTube", icon: icons.youtube },
+  { name: "LinkedIn", icon: icons.linkedin },
+  { name: "Instagram", icon: icons.instagram },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <a class="footer-logo" href="/"><Logo light size={28} href={null} /></a>
+
+    <div class="footer-cols">
+      {
+        columns.map((c) => (
+          <div class="footer-col">
+            <h4>{c.title}</h4>
+            <ul>
+              {c.links.map((l) => (
+                <li>
+                  <a href="#">{l}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="footer-apps">
+      <a class="store" href="#">
+        <span class="ic" set:html={icons.apple} />
+        <span><small>Download on the</small><strong>App Store</strong></span>
+      </a>
+      <a class="store" href="#">
+        <span class="ic" set:html={icons.google} />
+        <span><small>Get it on</small><strong>Google Play</strong></span>
+      </a>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="socials">
+        {
+          socials.map((s) => (
+            <a class="social" href="#" aria-label={s.name}>
+              <span class="ic" set:html={s.icon} />
+            </a>
+          ))
+        }
+      </div>
+      <div class="locale">
+        <span class="ic" set:html={icons.globe} /> English
+        <span class="ic" set:html={icons.pin} /> Riyadh
+      </div>
+    </div>
+
+    <div class="legal">
+      <span>© {new Date().getFullYear()} Uber Technologies Inc.</span>
+      <nav>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Accessibility</a>
+        <a href="#">Terms</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--black);
+    color: var(--white);
+    padding: 56px 0 40px;
+    margin-top: auto;
+  }
+  .footer-logo {
+    display: inline-block;
+    margin-bottom: 40px;
+  }
+  .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  .footer-col h4 {
+    font-size: 1rem;
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer-col a {
+    color: var(--mono-500);
+    font-size: 0.95rem;
+  }
+  .footer-col a:hover {
+    color: var(--white);
+  }
+  .footer-apps {
+    display: flex;
+    gap: 14px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+  }
+  .store {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: var(--radius);
+    padding: 10px 18px;
+    min-width: 180px;
+  }
+  .store:hover {
+    background: #242424;
+  }
+  .store .ic {
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    color: var(--white);
+  }
+  .store span span,
+  .store > span:last-child {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .store small {
+    font-size: 0.7rem;
+    color: var(--mono-500);
+  }
+  .store strong {
+    font-size: 1.05rem;
+  }
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #2a2a2a;
+    padding-top: 28px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .socials {
+    display: flex;
+    gap: 22px;
+  }
+  .social .ic {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    color: var(--white);
+  }
+  .social:hover {
+    opacity: 0.7;
+  }
+  .locale {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .locale .ic {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    margin-left: 12px;
+  }
+  .legal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
+    color: var(--mono-600);
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .legal nav {
+    display: flex;
+    gap: 20px;
+  }
+  .legal a:hover {
+    color: var(--white);
+  }
+
+  @media (max-width: 860px) {
+    .footer-cols {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+  }
+  @media (max-width: 520px) {
+    .footer-cols {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

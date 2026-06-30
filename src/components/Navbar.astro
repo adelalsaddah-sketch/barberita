@@ -1,0 +1,166 @@
+---
+import Logo from "./Logo.astro";
+import { icons } from "../lib/icons";
+
+const links = [
+  { label: "Ride", href: "/ride" },
+  { label: "Drive", href: "/drive" },
+  { label: "Business", href: "/#business" },
+  { label: "About", href: "/#about" },
+];
+---
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <Logo light size={26} />
+      <nav class="nav-links" aria-label="Primary">
+        {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      </nav>
+    </div>
+    <div class="nav-right">
+      <a class="nav-pill" href="/#help"><span class="ic" set:html={icons.globe} />EN</a>
+      <a class="nav-pill" href="/#help">Help</a>
+      <a class="nav-pill" href="/login">Log in</a>
+      <a class="btn btn-light btn-pill nav-signup" href="/signup">Sign up</a>
+      <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+        <span class="ic" set:html={icons.menu} />
+      </button>
+    </div>
+  </div>
+
+  <div class="nav-mobile" id="navMobile" hidden>
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    <hr />
+    <a href="/login">Log in</a>
+    <a class="btn btn-light btn-pill" href="/signup">Sign up</a>
+  </div>
+</header>
+
+<style>
+  .nav {
+    background: var(--black);
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    height: var(--nav-h);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 6px;
+  }
+  .nav-links a {
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  .nav-links a:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  .nav-pill:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .nav-pill .ic {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+  }
+  .nav-signup {
+    margin-left: 6px;
+    padding: 10px 16px;
+  }
+  .nav-burger {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--white);
+    padding: 8px;
+  }
+  .nav-burger .ic {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+  }
+  .nav-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 24px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .nav-mobile a {
+    padding: 12px 8px;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+  .nav-mobile .btn {
+    margin-top: 6px;
+    justify-content: center;
+  }
+  .nav-mobile hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin: 6px 0;
+  }
+
+  @media (max-width: 860px) {
+    .nav-links,
+    .nav-pill,
+    .nav-signup {
+      display: none;
+    }
+    .nav-burger {
+      display: inline-flex;
+    }
+    .nav-mobile[data-open="true"] {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const burger = document.getElementById("navBurger");
+  const mobile = document.getElementById("navMobile");
+  burger?.addEventListener("click", () => {
+    const open = mobile?.getAttribute("data-open") === "true";
+    if (!mobile) return;
+    if (open) {
+      mobile.setAttribute("data-open", "false");
+      mobile.hidden = true;
+      burger?.setAttribute("aria-expanded", "false");
+    } else {
+      mobile.setAttribute("data-open", "true");
+      mobile.hidden = false;
+      burger?.setAttribute("aria-expanded", "true");
+    }
+  });
+</script>

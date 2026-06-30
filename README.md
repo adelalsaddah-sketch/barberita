@@ -1,64 +1,70 @@
-# Astro Starter Kit: Blog
+# Uber — ride-hailing web app
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/astro-blog-starter-template)
+A full Uber-style ride-hailing web application built with [Astro](https://astro.build/)
+and deployed to Cloudflare Workers as a static site. It replicates Uber's
+black-and-white "Base" design language — typography, colours, layout and the
+core ride-booking experience.
 
-![Astro Template Preview](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+> Educational / demonstration clone. Not affiliated with Uber Technologies Inc.
+> Trademarks belong to their respective owners.
 
 <!-- dash-content-start -->
 
-Create a blog with Astro and deploy it on Cloudflare Workers as a [static website](https://developers.cloudflare.com/workers/static-assets/).
+## Features
 
-Features:
+- ✅ **Marketing landing page** — "Go anywhere with Uber" hero with a request-a-ride
+  card, suggestion cards, driver & business sections, and app-download blocks.
+- ✅ **Interactive ride-booking app** (`/ride`) with a complete journey:
+  - Self-contained **SVG city map** (street grid, parks, water, animated traffic) —
+    no map tiles, API keys or network needed, so it renders identically everywhere.
+  - Location search with autocomplete suggestions and saved places.
+  - **Ride selection** (UberX, Comfort, Uber Green, UberXL, Uber Black, Uber Moto)
+    with vehicle art, capacities, ETAs and live fare estimates.
+  - Payment toggle, request flow, **driver matching**, live **driver tracking**,
+    on-trip progress and an arrival + rating screen.
+- ✅ **Auth screens** — Uber-style log in / sign up with social options.
+- ✅ **Drive with Uber** marketing page.
+- ✅ Fully **responsive** — desktop split view collapses to a mobile bottom sheet.
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-- ✅ Built-in Observability logging
+## Project structure
 
-<!-- dash-content-end -->
-
-## Getting Started
-
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
-
-```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/astro-blog-starter-template
+```
+src/
+  layouts/Base.astro        # HTML shell, fonts, meta
+  components/               # Logo, Navbar, SiteFooter, MapArt, AuthShell
+  pages/
+    index.astro             # Landing page
+    ride.astro              # Ride-booking app shell + styles
+    login.astro / signup.astro
+    drive.astro
+  scripts/ride.ts           # Ride flow state machine
+  lib/
+    map.ts                  # Self-contained SVG map renderer
+    places.ts               # Synthetic geocoder + suggestions
+    rides.ts                # Ride catalog + fare estimation
+    icons.ts                # Inline SVG icon set + vehicle art
+  styles/global.css         # Uber design system (tokens, buttons, utilities)
 ```
 
-A live public deployment of this template is available at [https://astro-blog-starter-template.templates.workers.dev](https://astro-blog-starter-template.templates.workers.dev)
-
-## 🚀 Project Structure
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
+<!-- dash-content-end -->
 
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                           | Action                                           |
-| :-------------------------------- | :----------------------------------------------- |
-| `npm install`                     | Installs dependencies                            |
-| `npm run dev`                     | Starts local dev server at `localhost:4321`      |
-| `npm run build`                   | Build your production site to `./dist/`          |
-| `npm run preview`                 | Preview your build locally, before deploying     |
-| `npm run astro ...`               | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help`         | Get help using the Astro CLI                     |
-| `npm run build && npm run deploy` | Deploy your production site to Cloudflare        |
-| `npm wrangler tail`               | View real-time logs for all Workers              |
+| Command                           | Action                                       |
+| :-------------------------------- | :------------------------------------------- |
+| `npm install`                     | Installs dependencies                        |
+| `npm run dev`                     | Starts local dev server at `localhost:4321`  |
+| `npm run build`                   | Build your production site to `./dist/`      |
+| `npm run preview`                 | Preview the build locally before deploying   |
+| `npm run build && npm run deploy` | Deploy the production site to Cloudflare     |
 
-## 👀 Want to learn more?
+## Tech notes
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+- The map is drawn entirely in SVG and animated with `requestAnimationFrame`, so
+  there are **no external runtime dependencies** (no tiles, no API keys).
+- Typography uses **Inter** (loaded from Google Fonts) as a close stand-in for
+  Uber Move, gracefully falling back to the system font stack if unavailable.
+- Everything is prerendered to static HTML; the interactive ride flow runs fully
+  client-side.

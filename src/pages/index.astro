@@ -1,50 +1,489 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import Base from "../layouts/Base.astro";
+import Navbar from "../components/Navbar.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import MapArt from "../components/MapArt.astro";
+import { icons, vehicles } from "../lib/icons";
+
+const suggestions = [
+  { title: "Ride", text: "Go anywhere with Uber. Request a ride, hop in, and go.", icon: icons.dot, href: "/ride", cta: "Details" },
+  { title: "Reserve", text: "Reserve your ride in advance so you can relax on the day of your trip.", icon: icons.reserve, href: "/ride", cta: "Details" },
+  { title: "Rental Cars", text: "Rent a car for a few hours, a day, or longer — Uber‑style flexibility.", icon: icons.rental, href: "/ride", cta: "Details" },
+  { title: "Package", text: "Use the app to send packages to friends and family across town.", icon: icons.package, href: "/ride", cta: "Details" },
+];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Base title="Uber">
+  <Navbar />
+
+  <!-- ───────────────── Hero ───────────────── -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy fade-up">
+        <h1>Go anywhere with Uber</h1>
+
+        <div class="ride-card">
+          <div class="rc-fields">
+            <label class="field">
+              <span class="ic origin" set:html={icons.dot} />
+              <input id="pickup" type="text" placeholder="Pickup location" autocomplete="off" />
+            </label>
+            <label class="field">
+              <span class="ic" set:html={icons.square} />
+              <input id="dropoff" type="text" placeholder="Dropoff location" autocomplete="off" />
+            </label>
+          </div>
+
+          <div class="rc-when">
+            <button class="select" type="button">
+              <span class="ic" set:html={icons.calendar} />
+              Today
+              <span class="ic sm" set:html={icons.chevronDown} />
+            </button>
+            <button class="select" type="button">
+              <span class="ic" set:html={icons.clock} />
+              Now
+              <span class="ic sm" set:html={icons.chevronDown} />
+            </button>
+          </div>
+
+          <div class="rc-actions">
+            <button class="btn btn-primary" id="seePrices" type="button">See prices</button>
+            <a class="rc-login" href="/login">Log in to see your recent activity</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-art fade-up">
+        <MapArt />
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── Suggestions ───────────────── -->
+  <section class="section">
+    <div class="container">
+      <h2 class="block-title">Suggestions</h2>
+      <div class="sugg-grid">
+        {
+          suggestions.map((s) => (
+            <a class="sugg-card" href={s.href}>
+              <div class="sugg-body">
+                <h3>{s.title}</h3>
+                <p class="muted">{s.text}</p>
+                <span class="sugg-cta">
+                  {s.cta}
+                  <span class="ic" set:html={icons.chevronRight} />
+                </span>
+              </div>
+              <div class="sugg-art">
+                <span class="ic" set:html={s.icon} />
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── Drive promo ───────────────── -->
+  <section class="section alt">
+    <div class="container split">
+      <div class="split-art panel">
+        <span class="big-vehicle" set:html={vehicles.sedan} />
+      </div>
+      <div class="split-copy">
+        <h2>Drive when you want, make what you need</h2>
+        <p class="muted lead">
+          Make money on your schedule with deliveries or rides — or both. You can
+          use your own car or choose a rental through Uber.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="/signup">Get started</a>
+          <a class="link-arrow" href="/login">
+            Already have an account? Sign in
+            <span class="ic" set:html={icons.arrowRight} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── Business ───────────────── -->
+  <section class="section" id="business">
+    <div class="container split reverse">
+      <div class="split-copy">
+        <h2>The Uber you know, reimagined for business</h2>
+        <p class="muted lead">
+          Uber for Business is a platform for managing global rides and meals, and
+          local deliveries, for companies of any size.
+        </p>
+        <ul class="check-list">
+          <li><span class="ic" set:html={icons.check} />Centralized dashboard &amp; billing</li>
+          <li><span class="ic" set:html={icons.check} />Travel &amp; expense made simple</li>
+          <li><span class="ic" set:html={icons.check} />24/7 support for your team</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="/signup">Get started</a>
+          <a class="link-arrow" href="#">Check out our solutions<span class="ic" set:html={icons.arrowRight} /></a>
+        </div>
+      </div>
+      <div class="split-art panel">
+        <span class="big-icon" set:html={icons.briefcase} />
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────── App download ───────────────── -->
+  <section class="section alt" id="about">
+    <div class="container">
+      <h2 class="block-title">It's easier in the apps</h2>
+      <div class="apps-grid">
+        <div class="app-card">
+          <div class="app-art"><span class="big-icon" set:html={icons.dot} /></div>
+          <div class="app-copy">
+            <h3>Download the Uber app</h3>
+            <p class="muted">Scan to download for iOS and Android, then request your first ride.</p>
+            <div class="store-row">
+              <a class="store-dark" href="#"><span class="ic" set:html={icons.apple} />App Store</a>
+              <a class="store-dark" href="#"><span class="ic" set:html={icons.google} />Google Play</a>
+            </div>
+          </div>
+        </div>
+        <div class="app-card">
+          <div class="app-art"><span class="big-vehicle" set:html={vehicles.suv} /></div>
+          <div class="app-copy">
+            <h3>Download the Driver app</h3>
+            <p class="muted">Sign up to drive, deliver, and earn on your own schedule.</p>
+            <div class="store-row">
+              <a class="store-dark" href="#"><span class="ic" set:html={icons.apple} />App Store</a>
+              <a class="store-dark" href="#"><span class="ic" set:html={icons.google} />Google Play</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter />
+</Base>
+
+<style>
+  /* hero */
+  .hero {
+    padding: 56px 0 24px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 48px;
+    align-items: center;
+  }
+  .hero-copy h1 {
+    margin-bottom: 28px;
+  }
+  .ride-card {
+    max-width: 480px;
+  }
+  .rc-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .rc-fields .ic {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+    display: inline-flex;
+  }
+  .rc-when {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .select {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--mono-200);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    padding: 0 14px;
+    height: 52px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    flex: 1;
+  }
+  .select:hover {
+    background: var(--mono-300);
+  }
+  .select .ic {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+  }
+  .select .ic.sm {
+    width: 16px;
+    height: 16px;
+    margin-left: auto;
+  }
+  .rc-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .rc-login {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-size: 0.95rem;
+  }
+  .hero-art {
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  /* shared blocks */
+  .block-title {
+    margin-bottom: 28px;
+  }
+  .section.alt {
+    background: var(--mono-200);
+  }
+  .lead {
+    font-size: 1.1rem;
+    margin: 16px 0 24px;
+    max-width: 46ch;
+  }
+  .btn-row {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .link-arrow .ic {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+  }
+
+  /* suggestions */
+  .sugg-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .sugg-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+    background: var(--mono-200);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    min-height: 230px;
+    transition: background 0.15s ease;
+  }
+  .sugg-card:hover {
+    background: var(--mono-300);
+  }
+  .sugg-body h3 {
+    margin-bottom: 8px;
+  }
+  .sugg-body p {
+    font-size: 0.9rem;
+  }
+  .sugg-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 14px;
+    background: var(--white);
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .sugg-cta .ic {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+  }
+  .sugg-art {
+    align-self: flex-end;
+  }
+  .sugg-art .ic {
+    width: 56px;
+    height: 56px;
+    display: inline-flex;
+    color: var(--black);
+  }
+
+  /* split sections */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .split-copy h2 {
+    margin-bottom: 4px;
+  }
+  .panel {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    aspect-ratio: 16 / 11;
+    display: grid;
+    place-items: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--mono-300);
+  }
+  .section.alt .panel {
+    background: var(--white);
+  }
+  .big-vehicle {
+    width: 64%;
+    display: block;
+  }
+  .big-icon {
+    width: 120px;
+    height: 120px;
+    display: inline-flex;
+    color: var(--black);
+  }
+  .check-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 4px 0 24px;
+  }
+  .check-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+  }
+  .check-list .ic {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    color: var(--positive);
+    flex: 0 0 auto;
+  }
+
+  /* apps */
+  .apps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .app-card {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 20px;
+    align-items: center;
+    background: var(--white);
+    border: 1px solid var(--mono-300);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+  }
+  .app-art {
+    background: var(--mono-200);
+    border-radius: var(--radius);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+  }
+  .app-art .big-icon {
+    width: 64px;
+    height: 64px;
+  }
+  .app-art .big-vehicle {
+    width: 80%;
+  }
+  .app-copy h3 {
+    margin-bottom: 6px;
+  }
+  .store-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .store-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--black);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .store-dark .ic {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+  }
+
+  @media (max-width: 980px) {
+    .sugg-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 860px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero-art {
+      order: -1;
+    }
+    .split,
+    .split.reverse {
+      grid-template-columns: 1fr;
+    }
+    .split.reverse .split-art {
+      order: -1;
+    }
+    .apps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .sugg-grid {
+      grid-template-columns: 1fr;
+    }
+    .app-card {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  function go() {
+    const pickup = (document.getElementById("pickup") as HTMLInputElement)?.value.trim();
+    const dropoff = (document.getElementById("dropoff") as HTMLInputElement)?.value.trim();
+    const params = new URLSearchParams();
+    if (pickup) params.set("pickup", pickup);
+    if (dropoff) params.set("dropoff", dropoff);
+    const qs = params.toString();
+    window.location.href = "/ride" + (qs ? `?${qs}` : "");
+  }
+  document.getElementById("seePrices")?.addEventListener("click", go);
+  document.getElementById("dropoff")?.addEventListener("keydown", (e) => {
+    if ((e as KeyboardEvent).key === "Enter") go();
+  });
+</script>

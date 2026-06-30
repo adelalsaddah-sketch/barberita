@@ -1,0 +1,264 @@
+---
+import Base from "../layouts/Base.astro";
+import Navbar from "../components/Navbar.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { icons, vehicles } from "../lib/icons";
+
+const benefits = [
+  { icon: icons.clock, title: "Set your own schedule", text: "Drive whenever it works for you — full-time, part-time, or just now and then." },
+  { icon: icons.wallet, title: "Get paid fast", text: "Cash out your earnings up to 5 times a day, or get paid automatically every week." },
+  { icon: icons.shield, title: "You're in control", text: "Choose where and when you drive, and see trip details before you accept." },
+];
+
+const steps = [
+  { n: 1, title: "Sign up online", text: "Tell us about yourself and your vehicle. It only takes a few minutes." },
+  { n: 2, title: "Get your documents ready", text: "Upload your license and registration so we can review your application." },
+  { n: 3, title: "Start earning", text: "Once you're approved, turn on the app and accept your first trip." },
+];
+---
+
+<Base title="Drive & Deliver" description="Make money on your schedule with Uber.">
+  <Navbar />
+
+  <!-- Hero -->
+  <section class="drive-hero">
+    <div class="container split">
+      <div class="dh-copy fade-up">
+        <h1>Drive when you want, make what you need</h1>
+        <p class="muted lead">
+          Earn on your own schedule. Make money on your terms with deliveries or
+          rides — or both.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn-primary btn-lg" href="/signup">Sign up to drive</a>
+          <a class="link-arrow" href="/login">Already have an account? Sign in
+            <span class="ic" set:html={icons.arrowRight} /></a>
+        </div>
+      </div>
+      <div class="dh-art panel">
+        <span class="big-vehicle" set:html={vehicles.sedan} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Earnings band -->
+  <section class="earn-band">
+    <div class="container earn-grid">
+      <div class="earn-stat"><b>SAR 1,250</b><span>potential weekly earnings*</span></div>
+      <div class="earn-stat"><b>24/7</b><span>support whenever you need it</span></div>
+      <div class="earn-stat"><b>5×</b><span>instant cashouts per day</span></div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section">
+    <div class="container">
+      <h2 class="block-title">Why drive with Uber</h2>
+      <div class="benefit-grid">
+        {
+          benefits.map((b) => (
+            <div class="benefit">
+              <span class="benefit-ic"><span class="ic" set:html={b.icon} /></span>
+              <h3>{b.title}</h3>
+              <p class="muted">{b.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section alt">
+    <div class="container">
+      <h2 class="block-title">Getting started is simple</h2>
+      <div class="steps-grid">
+        {
+          steps.map((s) => (
+            <div class="step-item">
+              <span class="step-n">{s.n}</span>
+              <div>
+                <h3>{s.title}</h3>
+                <p class="muted">{s.text}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <div class="btn-row center-row">
+        <a class="btn btn-primary btn-lg" href="/signup">Get started</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <section class="cta-band">
+    <div class="container cta-inner">
+      <h2>Ready to earn on your schedule?</h2>
+      <a class="btn btn-light btn-lg" href="/signup">Sign up to drive</a>
+    </div>
+  </section>
+
+  <SiteFooter />
+</Base>
+
+<style>
+  .drive-hero {
+    padding: 64px 0 40px;
+  }
+  .dh-copy h1 {
+    margin-bottom: 18px;
+  }
+  .lead {
+    font-size: 1.15rem;
+    margin-bottom: 28px;
+    max-width: 46ch;
+  }
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .panel {
+    background: var(--mono-200);
+    border-radius: var(--radius-lg);
+    aspect-ratio: 16 / 11;
+    display: grid;
+    place-items: center;
+  }
+  .big-vehicle {
+    width: 66%;
+  }
+  .btn-row {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+  .center-row {
+    justify-content: center;
+    margin-top: 36px;
+  }
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .link-arrow .ic {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+  }
+
+  .earn-band {
+    background: var(--black);
+    color: var(--white);
+    padding: 36px 0;
+  }
+  .earn-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    text-align: center;
+  }
+  .earn-stat b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    letter-spacing: -0.02em;
+  }
+  .earn-stat span {
+    color: var(--mono-500);
+    font-size: 0.95rem;
+  }
+
+  .block-title {
+    margin-bottom: 28px;
+  }
+  .section.alt {
+    background: var(--mono-200);
+  }
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .benefit-ic {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius);
+    background: var(--mono-200);
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+  }
+  .benefit-ic .ic {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+  }
+  .benefit h3 {
+    margin-bottom: 8px;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .step-item {
+    display: flex;
+    gap: 16px;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+  }
+  .step-n {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--black);
+    color: var(--white);
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+  .step-item h3 {
+    margin-bottom: 6px;
+  }
+
+  .cta-band {
+    background: var(--black);
+    color: var(--white);
+    padding: 56px 0;
+  }
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .cta-inner h2 {
+    color: var(--white);
+  }
+
+  @media (max-width: 860px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+    .dh-art {
+      order: -1;
+    }
+    .earn-grid,
+    .benefit-grid,
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

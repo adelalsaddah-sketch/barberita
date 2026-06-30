@@ -1,0 +1,54 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Lock the page to the viewport height (used by the full-screen ride app). */
+  fullscreen?: boolean;
+}
+
+const {
+  title = "Uber",
+  description = "Go anywhere with Uber. Request a ride, hop in, and go.",
+  fullscreen = false,
+} = Astro.props;
+
+const fullTitle = title === "Uber" ? "Uber" : `${title} | Uber`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+
+    <!-- Inter approximates Uber Move; falls back to system fonts if blocked -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    />
+  </head>
+  <body class={fullscreen ? "is-fullscreen" : ""}>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  body.is-fullscreen {
+    height: 100dvh;
+    overflow: hidden;
+  }
+</style>

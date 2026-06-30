@@ -1,0 +1,100 @@
+---
+/**
+ * Static decorative "map snapshot" in the Uber map style.
+ * Pure SVG so it renders identically everywhere with no network/tiles.
+ */
+interface Props {
+  class?: string;
+  rounded?: boolean;
+}
+const { class: className = "", rounded = true } = Astro.props;
+
+// Street grid lines
+const vLines = [60, 140, 230, 320, 410, 500];
+const hLines = [70, 150, 250, 340, 410];
+---
+
+<svg
+  class:list={["mapart", className]}
+  viewBox="0 0 600 460"
+  preserveAspectRatio="xMidYMid slice"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label="Map with a planned route"
+>
+  <defs>
+    {rounded && (
+      <clipPath id="mapclip"><rect width="600" height="460" rx="16" /></clipPath>
+    )}
+  </defs>
+  <g clip-path={rounded ? "url(#mapclip)" : undefined}>
+    <rect width="600" height="460" fill="var(--map-bg)" />
+
+    <!-- water -->
+    <path
+      d="M0 0 L180 0 C150 90 250 130 210 220 C180 300 60 320 0 300 Z"
+      fill="var(--map-water)"
+      opacity="0.85"
+    />
+
+    <!-- park -->
+    <rect x="330" y="280" width="170" height="120" rx="14" fill="var(--map-park)" />
+
+    <!-- city blocks -->
+    {
+      [
+        [240, 80, 60, 50],
+        [320, 80, 70, 50],
+        [410, 80, 70, 50],
+        [240, 160, 60, 70],
+        [320, 160, 70, 70],
+        [430, 160, 60, 50],
+        [70, 350, 60, 60],
+        [150, 350, 60, 60],
+      ].map(([x, y, w, h]) => (
+        <rect x={x} y={y} width={w} height={h} rx="6" fill="var(--map-block)" />
+      ))
+    }
+
+    <!-- minor roads -->
+    {vLines.map((x) => <line x1={x} y1="0" x2={x} y2="460" stroke="var(--map-road)" stroke-width="8" />)}
+    {hLines.map((y) => <line x1="0" y1={y} x2="600" y2={y} stroke="var(--map-road)" stroke-width="8" />)}
+
+    <!-- a major road (cream) -->
+    <line x1="0" y1="250" x2="600" y2="250" stroke="var(--map-road-major)" stroke-width="14" />
+    <line x1="320" y1="0" x2="320" y2="460" stroke="var(--map-road-major)" stroke-width="14" />
+
+    <!-- route -->
+    <path
+      d="M120 360 L120 250 L320 250 L320 150 L470 150"
+      fill="none"
+      stroke="#000"
+      stroke-width="7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- origin dot -->
+    <circle cx="120" cy="360" r="11" fill="#fff" stroke="#000" stroke-width="5" />
+
+    <!-- destination pin -->
+    <g transform="translate(470 150)">
+      <path d="M0 -34 C16 -34 24 -22 24 -10 C24 6 0 26 0 26 C0 26 -24 6 -24 -10 C-24 -22 -16 -34 0 -34 Z" fill="#000" transform="scale(0.7)" />
+      <circle cx="0" cy="-15" r="6" fill="#fff" transform="scale(0.7)" />
+    </g>
+
+    <!-- car on route -->
+    <g transform="translate(320 250) rotate(0)">
+      <rect x="-8" y="-13" width="16" height="26" rx="6" fill="#000" />
+      <rect x="-5.5" y="-9" width="11" height="8" rx="2" fill="#9fc3ef" />
+    </g>
+  </g>
+</svg>
+
+<style>
+  .mapart {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>

@@ -1,0 +1,112 @@
+---
+import Logo from "./Logo.astro";
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<div class="auth">
+  <header class="auth-head">
+    <Logo size={26} href="/" />
+  </header>
+  <main class="auth-main">
+    <div class="auth-card">
+      <h1 class="auth-title">{title}</h1>
+      <slot />
+    </div>
+  </main>
+</div>
+
+<style>
+  .auth {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+  .auth-head {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--mono-300);
+  }
+  .auth-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 56px 20px;
+  }
+  .auth-card {
+    width: 100%;
+    max-width: 380px;
+  }
+  .auth-title {
+    font-size: 1.7rem;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+</style>
+
+<style is:global>
+  .auth-field {
+    margin-bottom: 14px;
+  }
+  .auth-field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--mono-700);
+    font-size: 0.85rem;
+    margin: 22px 0;
+  }
+  .auth-divider::before,
+  .auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--mono-300);
+  }
+  .social-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: var(--mono-200);
+    border: none;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .social-btn:hover {
+    background: var(--mono-300);
+  }
+  .social-btn .ic {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+  }
+  .auth-fine {
+    color: var(--mono-700);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin-top: 20px;
+  }
+  .auth-fine a {
+    text-decoration: underline;
+  }
+  .auth-switch {
+    margin-top: 26px;
+    font-size: 0.95rem;
+  }
+  .auth-switch a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>
