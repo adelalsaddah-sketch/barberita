@@ -8,6 +8,9 @@ import cloudflare from "@astrojs/cloudflare";
 // https://astro.build/config
 export default defineConfig({
   site: "https://example.com",
+  // Always emit/normalize trailing slashes so extensionless routes resolve on
+  // strict static hosts AND inside a self-contained Capacitor APK WebView.
+  trailingSlash: "always",
   integrations: [mdx(), sitemap()],
   adapter: cloudflare({
     platformProxy: {

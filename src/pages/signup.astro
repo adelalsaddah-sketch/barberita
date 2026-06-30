@@ -29,7 +29,7 @@ import { icons } from "../lib/icons";
     </p>
 
     <p class="auth-switch">
-      Already have an account? <a href="/login">Log in</a>
+      Already have an account? <a href="/login/">Log in</a>
     </p>
   </AuthShell>
 </Base>
@@ -37,6 +37,6 @@ import { icons } from "../lib/icons";
 <script>
   document.getElementById("auth-form")?.addEventListener("submit", (e) => {
     e.preventDefault();
-    window.location.href = "/ride";
+    window.location.href = "/ride/";
   });
 </script>

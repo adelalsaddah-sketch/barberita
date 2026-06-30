@@ -1,0 +1,8 @@
+{
+  "appId": "com.example.uberclone",
+  "appName": "Uber",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
