@@ -26,6 +26,14 @@ const fullTitle = title === "Uber" ? "Uber" : `${title} | Uber`;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- PWA: installable on Android/iOS home screen -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Uber" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
     <title>{fullTitle}</title>
     <meta name="title" content={fullTitle} />
     <meta name="description" content={description} />
@@ -43,6 +51,14 @@ const fullTitle = title === "Uber" ? "Uber" : `${title} | Uber`;
   </head>
   <body class={fullscreen ? "is-fullscreen" : ""}>
     <slot />
+    <script is:inline>
+      // Register the service worker so the app is installable & works offline.
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/sw.js").catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>
 

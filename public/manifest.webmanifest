@@ -1,0 +1,37 @@
+{
+  "name": "Uber",
+  "short_name": "Uber",
+  "description": "Go anywhere with Uber. Request a ride, hop in, and go.",
+  "start_url": "/ride",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "categories": ["travel", "navigation"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Request a ride",
+      "url": "/ride",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Drive with Uber",
+      "url": "/drive"
+    }
+  ]
+}
