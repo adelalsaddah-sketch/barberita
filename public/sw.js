@@ -3,7 +3,7 @@
    - Navigations: network-first, falling back to cache (offline support).
    - Other GET requests: stale-while-revalidate. */
 const VERSION = "uber-pwa-v1";
-const CORE = ["/", "/ride/", "/drive/", "/login/", "/signup/", "/favicon.svg", "/manifest.webmanifest"];
+const CORE = ["/", "/ride.html", "/drive.html", "/login.html", "/signup.html", "/favicon.svg", "/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -33,7 +33,7 @@ self.addEventListener("fetch", (event) => {
           caches.open(VERSION).then((c) => c.put(request, copy));
           return res;
         })
-        .catch(() => caches.match(request).then((r) => r || caches.match("/ride/") || caches.match("/")))
+        .catch(() => caches.match(request).then((r) => r || caches.match("/ride.html") || caches.match("/")))
     );
     return;
   }

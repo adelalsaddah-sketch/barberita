@@ -75,6 +75,9 @@ cd android && ./gradlew assembleDebug
 
 ## Notes
 
-- Internal routes use trailing slashes (`/ride/`) and `trailingSlash: "always"`
-  so they resolve on strict static hosts **and** inside the Capacitor WebView.
+- Pages are emitted as real `.html` files (`build.format: "file"`) and linked
+  as `/ride.html`, `/login.html`, etc. Capacitor's WebView (html5mode) routes
+  every *extensionless* path back to the root `index.html`, so clean/`/ride/`
+  URLs would just re-show the landing page inside the APK. Linking real `.html`
+  files fixes that and also works on any static host and on Cloudflare.
 - Educational/demo clone — not affiliated with Uber Technologies Inc.

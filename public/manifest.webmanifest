@@ -2,7 +2,7 @@
   "name": "Uber",
   "short_name": "Uber",
   "description": "Go anywhere with Uber. Request a ride, hop in, and go.",
-  "start_url": "/ride/",
+  "start_url": "/ride.html",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
@@ -26,12 +26,12 @@
   "shortcuts": [
     {
       "name": "Request a ride",
-      "url": "/ride/",
+      "url": "/ride.html",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Drive with Uber",
-      "url": "/drive/"
+      "url": "/drive.html"
     }
   ]
 }

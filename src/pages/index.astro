@@ -6,10 +6,10 @@ import MapArt from "../components/MapArt.astro";
 import { icons, vehicles } from "../lib/icons";
 
 const suggestions = [
-  { title: "Ride", text: "Go anywhere with Uber. Request a ride, hop in, and go.", icon: icons.dot, href: "/ride/", cta: "Details" },
-  { title: "Reserve", text: "Reserve your ride in advance so you can relax on the day of your trip.", icon: icons.reserve, href: "/ride/", cta: "Details" },
-  { title: "Rental Cars", text: "Rent a car for a few hours, a day, or longer — Uber‑style flexibility.", icon: icons.rental, href: "/ride/", cta: "Details" },
-  { title: "Package", text: "Use the app to send packages to friends and family across town.", icon: icons.package, href: "/ride/", cta: "Details" },
+  { title: "Ride", text: "Go anywhere with Uber. Request a ride, hop in, and go.", icon: icons.dot, href: "/ride.html", cta: "Details" },
+  { title: "Reserve", text: "Reserve your ride in advance so you can relax on the day of your trip.", icon: icons.reserve, href: "/ride.html", cta: "Details" },
+  { title: "Rental Cars", text: "Rent a car for a few hours, a day, or longer — Uber‑style flexibility.", icon: icons.rental, href: "/ride.html", cta: "Details" },
+  { title: "Package", text: "Use the app to send packages to friends and family across town.", icon: icons.package, href: "/ride.html", cta: "Details" },
 ];
 ---
 
@@ -49,7 +49,7 @@ const suggestions = [
 
           <div class="rc-actions">
             <button class="btn btn-primary" id="seePrices" type="button">See prices</button>
-            <a class="rc-login" href="/login/">Log in to see your recent activity</a>
+            <a class="rc-login" href="/login.html">Log in to see your recent activity</a>
           </div>
         </div>
       </div>
@@ -99,8 +99,8 @@ const suggestions = [
           use your own car or choose a rental through Uber.
         </p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="/signup/">Get started</a>
-          <a class="link-arrow" href="/login/">
+          <a class="btn btn-primary" href="/signup.html">Get started</a>
+          <a class="link-arrow" href="/login.html">
             Already have an account? Sign in
             <span class="ic" set:html={icons.arrowRight} />
           </a>
@@ -124,7 +124,7 @@ const suggestions = [
           <li><span class="ic" set:html={icons.check} />24/7 support for your team</li>
         </ul>
         <div class="btn-row">
-          <a class="btn btn-primary" href="/signup/">Get started</a>
+          <a class="btn btn-primary" href="/signup.html">Get started</a>
           <a class="link-arrow" href="#">Check out our solutions<span class="ic" set:html={icons.arrowRight} /></a>
         </div>
       </div>
@@ -480,7 +480,7 @@ const suggestions = [
     if (pickup) params.set("pickup", pickup);
     if (dropoff) params.set("dropoff", dropoff);
     const qs = params.toString();
-    window.location.href = "/ride/" + (qs ? `?${qs}` : "");
+    window.location.href = "/ride.html" + (qs ? `?${qs}` : "");
   }
   document.getElementById("seePrices")?.addEventListener("click", go);
   document.getElementById("dropoff")?.addEventListener("keydown", (e) => {

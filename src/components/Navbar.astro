@@ -3,8 +3,8 @@ import Logo from "./Logo.astro";
 import { icons } from "../lib/icons";
 
 const links = [
-  { label: "Ride", href: "/ride/" },
-  { label: "Drive", href: "/drive/" },
+  { label: "Ride", href: "/ride.html" },
+  { label: "Drive", href: "/drive.html" },
   { label: "Business", href: "/#business" },
   { label: "About", href: "/#about" },
 ];
@@ -21,8 +21,8 @@ const links = [
     <div class="nav-right">
       <a class="nav-pill" href="/#help"><span class="ic" set:html={icons.globe} />EN</a>
       <a class="nav-pill" href="/#help">Help</a>
-      <a class="nav-pill" href="/login/">Log in</a>
-      <a class="btn btn-light btn-pill nav-signup" href="/signup/">Sign up</a>
+      <a class="nav-pill" href="/login.html">Log in</a>
+      <a class="btn btn-light btn-pill nav-signup" href="/signup.html">Sign up</a>
       <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
         <span class="ic" set:html={icons.menu} />
       </button>
@@ -32,8 +32,8 @@ const links = [
   <div class="nav-mobile" id="navMobile" hidden>
     {links.map((l) => <a href={l.href}>{l.label}</a>)}
     <hr />
-    <a href="/login/">Log in</a>
-    <a class="btn btn-light btn-pill" href="/signup/">Sign up</a>
+    <a href="/login.html">Log in</a>
+    <a class="btn btn-light btn-pill" href="/signup.html">Sign up</a>
   </div>
 </header>
 
