@@ -1,0 +1,4 @@
+node_modules/
+dist/*
+!dist/pop-pop-bubble.mp4
+!dist/timeline.json
