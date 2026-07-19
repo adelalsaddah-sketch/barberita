@@ -373,11 +373,16 @@ function drawGestureCue(t, sec) {
   ctx.strokeStyle = '#FFB300'; ctx.lineWidth = 7;
   rr(-190, -95, 380, 190, 34); ctx.stroke();
   chunkyText('DANCE!', 0, -58, 34, '#FF8F00', null);
-  // simple hand icon: palm + pointing finger, wiggles to beat
-  ctx.save(); ctx.translate(-108, 18); ctx.rotate(Math.sin(t / BEAT * Math.PI) * 0.25);
+  // hand icon: fist with INDEX finger raised at the side + thumb (wiggles to beat)
+  ctx.save(); ctx.translate(-108, 22); ctx.rotate(Math.sin(t / BEAT * Math.PI) * 0.22);
   ctx.fillStyle = '#FFC98A';
-  ctx.beginPath(); ctx.arc(0, 16, 26, 0, 7); ctx.fill();
-  rr(-8, -44, 16, 52, 8); ctx.fill();
+  rr(-22, -6, 44, 40, 14); ctx.fill();               // fist
+  rr(-22, -48, 15, 52, 7); ctx.fill();               // index finger (left edge)
+  ctx.beginPath(); ctx.ellipse(24, 8, 12, 9, 0.5, 0, 7); ctx.fill(); // thumb
+  ctx.strokeStyle = 'rgba(190,120,60,0.55)'; ctx.lineWidth = 2.5; ctx.lineCap = 'round';
+  for (let i = 0; i < 3; i++) { // folded-finger knuckle lines
+    ctx.beginPath(); ctx.moveTo(-4 + i * 9, -4); ctx.lineTo(-4 + i * 9, 6); ctx.stroke();
+  }
   ctx.restore();
   ctx.fillStyle = '#31577E';
   ctx.font = '700 30px Arial, "DejaVu Sans", sans-serif';
