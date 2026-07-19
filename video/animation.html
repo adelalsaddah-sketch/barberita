@@ -425,11 +425,12 @@ function verseScene(t, sec) {
   const bx = 1230, by = 600 - grown * (isGP ? 130 : 90) - Math.sin(t * 1.7) * 8;
 
   const popped = !isGP && t >= popT;
-  const blowing = !popped && t >= v.start + 0.2;
+  const whoa = isGP && t >= popT; // grandpa leaves his spot and grabs the bubble
+  const blowing = !popped && !whoa && t >= v.start + 0.2;
   const celebrating = popped && t >= popT + 0.35;
 
-  // panda
-  drawPanda(px, py, sc, VARIANTS[vi], {
+  // panda (skipped during WHOA — the sliding copy below takes over)
+  if (!whoa) drawPanda(px, py, sc, VARIANTS[vi], {
     bob, blowing: false,
     blow: blowing && !celebrating,
     arms: celebrating ? 0.9 + Math.sin(t * 9) * 0.1 : 0,
@@ -452,10 +453,7 @@ function verseScene(t, sec) {
         ctx.beginPath(); ctx.arc(sx, sy + Math.sin(k * 9) * 12, 5 + k * 7, 0, 7); ctx.stroke();
       }
     }
-    if (isGP && t >= popT) { /* handled by gag */ }
     drawBubble(bx, by, r, t, { sparkles: vi === 3, wobble: vi === 2 ? 2.1 : 1 });
-    // grandpa hangs on when it's huge
-    if (isGP && t >= popT) drawPanda(bx, by + r + 95, sc, 'grandpa', { arms: 1 });
   } else {
     const k = clamp((t - popT) / 0.55, 0, 1);
     if (k < 1) drawBurst(bx, by, VMAX[vi], k, true);
@@ -467,11 +465,11 @@ function verseScene(t, sec) {
     }
   }
   // Grandpa WHOA: he dashes to the bubble and grabs on (popT..end)
-  if (isGP && t >= popT) {
+  if (whoa) {
     const k = ez(clamp((t - popT) / (v.end - popT), 0, 1));
     const gx = lerp(px, bx, k), gy = lerp(py, by + r + 95, k);
-    ctx.save(); ctx.globalAlpha = 1; drawPanda(gx, gy, sc, 'grandpa', { arms: k, sing: 1 }); ctx.restore();
-    chunkyText('WHOA!', bx, by - r - 70, 74 + Math.sin(t * 10) * 6, '#FFFFFF', '#E63C78');
+    drawPanda(gx, gy, sc, 'grandpa', { arms: k, sing: 1 });
+    chunkyText('WHOA!', bx, Math.max(120, by - r - 70), 74 + Math.sin(t * 10) * 6, '#FFFFFF', '#E63C78');
   }
 }
 
