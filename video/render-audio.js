@@ -3,12 +3,18 @@
 const fs = require('fs');
 const path = require('path');
 const { build } = require('./song');
-const { renderSong, writeWav, SR } = require('./synth');
+const { renderSong, writeWav, SR, GAIN } = require('./synth');
 
 const { events, timeline } = build();
 console.log(`events: ${events.length}, duration: ${timeline.duration.toFixed(2)}s, lines: ${timeline.lines.length}, pops: ${timeline.pops.length}`);
 
-const out = renderSong(events, timeline.duration);
+// sung vocals (MBROLA); synth lead becomes a soft double under the voice
+let vocals = null;
+if (!process.argv.includes('--instrumental')) {
+  vocals = require('./sing').renderVocalTrack(events, timeline.duration);
+  GAIN.lead = 0.18;
+}
+const out = renderSong(events, timeline.duration, vocals);
 const dist = path.join(__dirname, 'dist');
 fs.mkdirSync(dist, { recursive: true });
 writeWav(path.join(dist, 'soundtrack.wav'), out);

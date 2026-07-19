@@ -146,7 +146,7 @@ const INSTRUMENTS = {
 
 const GAIN = { kick: 0.95, clap: 0.55, hat: 0.4, bass: 0.5, pluck: 0.32, lead: 0.62, sparkle: 0.3, popsfx: 0.85, riser: 0.5 };
 
-function renderSong(events, duration) {
+function renderSong(events, duration, vocals) {
   const len = Math.ceil((duration + 2.5) * SR);
   const L = new Float32Array(len), R = new Float32Array(len);
   const sendL = new Float32Array(len), sendR = new Float32Array(len);
@@ -169,6 +169,8 @@ function renderSong(events, duration) {
     if (j >= 0) { sendL[i] += sendR[j] * fb; sendR[i] += sendL[j] * fb; }
     if (j >= 0) { L[i] += sendR[j] * 0.5; R[i] += sendL[j] * 0.5; }
   }
+  // vocal bus on top of the instrumental
+  if (vocals) for (let i = 0; i < len && i < vocals.L.length; i++) { L[i] += vocals.L[i] * 1.15; R[i] += vocals.R[i] * 1.15; }
   // soft clip master
   for (let i = 0; i < len; i++) { L[i] = Math.tanh(L[i] * 0.9); R[i] = Math.tanh(R[i] * 0.9); }
   // normalize to -1.2 dBFS
@@ -193,4 +195,4 @@ function writeWav(path, { L, R, norm, len }) {
   fs.writeFileSync(path, Buffer.concat([hdr, data]));
 }
 
-module.exports = { renderSong, writeWav, SR };
+module.exports = { renderSong, writeWav, SR, GAIN };
